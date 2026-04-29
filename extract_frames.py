@@ -17,7 +17,6 @@ def extract_frames(video_path, output_folder):
     cap.release()
     print(f"{video_path} -> {count} frames extracted")
 
-# SENİN PATHLER
 real_video = r"data\original_sequences\youtube\c23\videos\183.mp4"
 fake_video = r"data\manipulated_sequences\Deepfakes\c23\videos\183_253.mp4"
 
