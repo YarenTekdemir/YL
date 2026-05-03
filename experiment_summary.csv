@@ -1,0 +1,3 @@
+dataset,total_frames,selected_frames,reduction_percent
+real,390,49,87.44
+fake,390,32,91.79
