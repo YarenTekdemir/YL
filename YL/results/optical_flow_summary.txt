@@ -1,0 +1,8 @@
+Optical Flow Analysis Summary
+
+Temporal motion intensity was calculated using Farneback optical flow between consecutive frames. The analysis shows that optical flow magnitudes highlight preserved facial movements such as blinking and lip motion, while reducing redundant static frames.
+
+Key findings:
+- Farneback Optical Flow effectively measures temporal motion.
+- Optical flow values complement SSIM by capturing motion intensity rather than frame similarity alone.
+- Temporal movement preservation improves frame selection quality, especially for subtle facial actions.
