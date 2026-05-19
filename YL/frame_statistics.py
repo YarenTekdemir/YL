@@ -1,4 +1,5 @@
 import os
+import csv
 
 
 def count_frames(folder):
@@ -22,16 +23,45 @@ def analyze(original_folder, selected_folder, label):
     print(f"Selected frames : {selected_count}")
     print(f"Reduction       : {reduction:.2f}%")
 
+    return {
+        "label": label,
+        "original_frames": original_count,
+        "selected_frames": selected_count,
+        "reduction_percent": round(reduction, 2)
+    }
 
 
-analyze(
+real_result = analyze(
     "frames/real",
     "selected_frames/real",
     "REAL"
 )
 
-analyze(
+fake_result = analyze(
     "frames/fake",
     "selected_frames/fake",
     "FAKE"
 )
+
+rows = [
+    real_result,
+    fake_result
+]
+
+os.makedirs("results", exist_ok=True)
+
+with open("results/frame_statistics.csv", "w", newline="", encoding="utf-8") as f:
+    writer = csv.DictWriter(
+        f,
+        fieldnames=[
+            "label",
+            "original_frames",
+            "selected_frames",
+            "reduction_percent"
+        ]
+    )
+
+    writer.writeheader()
+    writer.writerows(rows)
+
+print("\nSaved results/frame_statistics.csv")
