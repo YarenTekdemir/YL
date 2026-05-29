@@ -1,0 +1,32 @@
+# Evaluation Report
+
+## Summary
+
+This report compares three frame usage strategies:
+
+- AllFrames
+- Every5thFrame
+- ProposedMethod
+
+## Evaluation Results
+
+| Method         | Label   |   TotalFrames |   SelectedFrames |   RemovedFrames |   ReductionPercent |   AvgMotionScore |   AvgFrequencyScore |   AvgOpticalFlowScore |   MaxMotionScore |   MaxFrequencyScore |   MaxOpticalFlowScore |
+|:---------------|:--------|--------------:|-----------------:|----------------:|-------------------:|-----------------:|--------------------:|----------------------:|-----------------:|--------------------:|----------------------:|
+| AllFrames      | Real    |           389 |              389 |               0 |               0    |           0.3289 |              0.1076 |                0.3289 |           0.5636 |              0.8572 |                0.5636 |
+| Every5thFrame  | Real    |           389 |               78 |             311 |              79.95 |           0.3368 |              0.1205 |                0.3368 |           0.5636 |              0.8572 |                0.5636 |
+| ProposedMethod | Real    |           389 |               49 |             340 |              87.4  |           0.4887 |              0.7149 |                0.4887 |           0.5636 |              0.8572 |                0.5636 |
+| AllFrames      | Fake    |           389 |              389 |               0 |               0    |           0.3219 |              0.0703 |                0.3219 |           0.55   |              0.8567 |                0.55   |
+| Every5thFrame  | Fake    |           389 |               78 |             311 |              79.95 |           0.33   |              0.0767 |                0.33   |           0.55   |              0.8567 |                0.55   |
+| ProposedMethod | Fake    |           389 |               49 |             340 |              87.4  |           0.4679 |              0.5232 |                0.4679 |           0.55   |              0.8567 |                0.55   |
+
+## Proposed Method Results
+
+| Method         | Label   |   TotalFrames |   SelectedFrames |   RemovedFrames |   ReductionPercent |   AvgMotionScore |   AvgFrequencyScore |   AvgOpticalFlowScore |   MaxMotionScore |   MaxFrequencyScore |   MaxOpticalFlowScore |
+|:---------------|:--------|--------------:|-----------------:|----------------:|-------------------:|-----------------:|--------------------:|----------------------:|-----------------:|--------------------:|----------------------:|
+| ProposedMethod | Real    |           389 |               49 |             340 |               87.4 |           0.4887 |              0.7149 |                0.4887 |           0.5636 |              0.8572 |                0.5636 |
+| ProposedMethod | Fake    |           389 |               49 |             340 |               87.4 |           0.4679 |              0.5232 |                0.4679 |           0.55   |              0.8567 |                0.55   |
+
+## Interpretation
+
+The proposed method reduces the number of processed frames while selecting frames with higher average motion and frequency scores.
+This supports the idea that informative frames can be prioritized instead of processing every frame.
