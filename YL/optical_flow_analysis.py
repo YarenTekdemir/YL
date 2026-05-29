@@ -26,9 +26,14 @@ def compute_optical_flow(frame1, frame2):
         flow[..., 1]
     )
 
-    mean_magnitude = np.mean(magnitude)
+    mean_flow = float(np.mean(magnitude))
+    max_flow = float(np.max(magnitude))
 
-    return mean_magnitude, magnitude
+    threshold = mean_flow + np.std(magnitude)
+    moving_pixels = magnitude > threshold
+    motion_area_ratio = float(np.sum(moving_pixels) / magnitude.size)
+
+    return mean_flow, max_flow, motion_area_ratio, magnitude
 
 
 def save_flow_visualization(magnitude, output_path):
@@ -64,12 +69,17 @@ def process_folder(frames_folder, output_csv, visual_folder):
         if frame1 is None or frame2 is None:
             continue
 
-        mean_flow, magnitude = compute_optical_flow(frame1, frame2)
+        mean_flow, max_flow, motion_area_ratio, magnitude = compute_optical_flow(
+            frame1,
+            frame2
+        )
 
         rows.append({
             "frame_1": files[i],
             "frame_2": files[i + 1],
-            "optical_flow_score": mean_flow
+            "optical_flow_score": mean_flow,
+            "max_optical_flow": max_flow,
+            "motion_area_ratio": motion_area_ratio
         })
 
         visual_path = os.path.join(
@@ -82,7 +92,12 @@ def process_folder(frames_folder, output_csv, visual_folder):
             visual_path
         )
 
-        print(f"{files[i]} -> {files[i+1]} : {mean_flow:.4f}")
+        print(
+            f"{files[i]} -> {files[i + 1]} : "
+            f"mean={mean_flow:.4f}, "
+            f"max={max_flow:.4f}, "
+            f"area={motion_area_ratio:.4f}"
+        )
 
     with open(output_csv, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(
@@ -90,7 +105,9 @@ def process_folder(frames_folder, output_csv, visual_folder):
             fieldnames=[
                 "frame_1",
                 "frame_2",
-                "optical_flow_score"
+                "optical_flow_score",
+                "max_optical_flow",
+                "motion_area_ratio"
             ]
         )
 
